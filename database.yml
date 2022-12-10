@@ -40,4 +40,4 @@
        state: started
        enabled: yes
    - name: Start database
-     command: chdir=/home/db-vm-websockets docker-compose up -d
+     command: chdir=/home/tope8396/db-vm-websockets docker-compose up -d

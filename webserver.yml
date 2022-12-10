@@ -40,4 +40,4 @@
        state: started
        enabled: yes
    - name: Start webserver
-     command: chdir=/home/websockets-django-react docker-compose up -d
+     command: chdir=/home/tope8396/websockets-django-react docker-compose up -d
