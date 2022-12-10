@@ -1,0 +1,45 @@
+---
+ - hosts: webserver
+   become: true
+   vars_files:
+     - vault.yml
+   vars:
+     ansible_become: yes
+     ansible_become_pass: "{{ my_password }}"
+     ansible_python_interpreter: "/usr/bin/python3"
+   tasks:
+   - name: Update
+     apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+   - name: Install packages
+     package:
+       name: "{{ item }}"
+       state: present
+     with_items:
+       - python3
+       - pip
+   - name: Install libraries with pip
+     pip:
+       name:
+         - docker
+         - docker-compose
+   - name: Add Docker GPG apt Key
+     apt_key:
+       url: https://download.docker.com/linux/debian/gpg
+       state: present
+   - name: Add Docker Repository
+     apt_repository:
+       repo: deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable
+       state: present
+   - name: Update apt and Install Docker-ce
+     apt: update_cache=yes name=docker-ce state=latest
+   - name: Copy webserver's files from ansible machine to remote machine
+     copy:
+       src:  /home/hakl8025/websockets
+       dest: /home/hakl8025
+   - name: Starting Docker Daemon
+     service:
+       name: docker
+       state: started
+       enabled: yes
+   - name: Start webserver
+     command: chdir=/home/hakl8025/websockets docker-compose up -d

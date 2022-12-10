@@ -1,0 +1,12 @@
+---
+ - hosts: client
+   become: true
+   vars_files:
+     - vault.yml
+   vars:
+     ansible_become: yes
+     ansible_become_pass: "{{ my_password }}"
+     ansible_python_interpreter: "/usr/bin/python3"
+   tasks:
+   - name: Install web browser
+     ansible.builtin.apt: name=chromium state=present update_cache=yes
