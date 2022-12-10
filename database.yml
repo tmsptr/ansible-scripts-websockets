@@ -32,8 +32,8 @@
      apt: update_cache=yes name=docker-ce state=latest
    - name: Copy database files from ansible machine to remote machine
      copy:
-       src:  ~/db-vm-websockets
-       dest: ~/
+       src:  /home/tope8396/db-vm-websockets
+       dest: /home/tope8396
    - name: Starting Docker Daemon
      service:
        name: docker
