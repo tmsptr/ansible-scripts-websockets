@@ -34,12 +34,12 @@
      apt: update_cache=yes name=docker-ce state=latest
    - name: Copy webserver's files from ansible machine to remote machine
      copy:
-       src:  /home/tope8396/websockets-django-react
-       dest: /home/tope8396
+       src:  ~/websockets-django-react
+       dest: ~/
    - name: Starting Docker Daemon
      service:
        name: docker
        state: started
        enabled: yes
    - name: Start webserver
-     command: chdir=/home/tope8396/websockets-django-react docker-compose up -d
+     command: chdir=~/websockets-django-react docker-compose up -d
